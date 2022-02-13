@@ -1,0 +1,135 @@
+#+AUTHOR: phdenzel
+#+TITLE: xmobar_wttr
+#+OPTIONS: toc:nil
+
+~xmobar_wttr~ is a command-line program which fetches weather info
+from [[https://wttr.in][wttr.in]] and applies direct formatting to be used by xmobar.
+Different from already available plugins, it can easily be configured
+to use any kind of combination of numbers, icons, and colors.  It
+implements a custom syntax with which a single line in the
+~xmobar_wttr.yml~ configuration file translates to an xmobar field entry.
+
+In the ~commands~ list of your ~xmobarrc~, add something along the lines
+of
+#+begin_src haskell
+Run Com "xmobar_wttr" ["-c", "~/.config/xmobar/xmobar_wttr.yml"] "wttr" 9000
+#+end_src
+
+
+*** Prerequisites
+
+    This program mainly uses following python3 modules
+    - requests
+    - pyyaml
+
+    Furthermore, the program uses weather icons from
+    [[https://github.com/erikflowers/weather-icons][https://github.com/erikflowers/weather-icons]].  Install them
+    directly from the website, using an AUR helper such as
+    
+    #+begin_src shell
+      yay -S ttf-weather-icons
+    #+end_src
+    
+    or by other means.
+
+
+*** Install
+
+#+BEGIN_SRC shell
+pip install xmobar-wttr
+#+END_SRC
+
+For installing from source, clone the repository, and run
+#+BEGIN_SRC shell
+cd xmobar_wttr
+python setup.py install --user
+#+END_SRC
+
+or create a virtual environment with
+#+BEGIN_SRC shell
+pipenv install
+pipenv install -e .
+#+END_SRC
+
+To activate the virtual environment run
+#+BEGIN_SRC shell
+pipenv shell
+#+END_SRC
+
+or start every command with ~pipenv run~.
+
+
+*** Usage
+
+#+BEGIN_SRC shell
+  usage: xmobar_wttr [-h] [-c <path>] [-l <loc>] [-f <format>] [-o <path>] [-s <section>] [-p <par-list> [<par-list> ...]] [-v]
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -c <path>, --config <path>
+                          Path to the config file
+    -l <loc>, --location <loc>
+                          Location for which to pull information.
+    -f <format>, --format <format>
+                          Format template for xmobarrc
+    -o <path>, --output <path>
+                          Path to the output file
+    -s <section>, --section <section>
+                          Section in the yaml file to be parsed
+    -p <par-list> [<par-list> ...], --pars <par-list> [<par-list> ...]
+                          Select parameters to be fetched from wttr.in
+                          excluded parameters are not available in xmobar template format
+    -v, --verbose         Run program in verbose mode
+#+END_SRC
+
+
+*** Configuration
+
+~xmobar_wttr~ works with both command-line arguments as well as YAML
+configuration files (the first takes precedence over the latter).  To
+set your desired defaults edit the configuration file
+~xmobar_wttr.yml~ and place it in either 
+- ~~/.config/xmobar_wttr/xmobar_wttr.yml~
+- ~~/.config/xmobar/xmobar_wttr.yml~
+- ~~/.xmobar_wttr/xmobar_wttr.yml~
+- ~~/.xmobar_wttr.yml~
+
+
+*** Notation
+
+- Fields are separated by ~%~.
+- Each field should have a parameter entry prefixed by an exclamation
+  mark ~!~, e.g. ~!h~.
+- Units can be placed using ~.u~
+- Fonts can be selected using ~<N:...>~ where ~N~ is the xmobar font
+  index, e.g. ~<2:weather condition>~ formats to ~<fn=2>weather
+  condition</fn>~
+- Analogously colors can be used using ~{#dedede:...}~.
+
+|----------+------------------------------------|
+| Notation | *Description                       |
+|----------+------------------------------------|
+| %[!par]  | parameter value                    |
+| %g[!par] | render parameter only as icon      |
+| %G[!par] | prefix icon to parameter value     |
+| .u       | append units of previous parameter |
+|----------+------------------------------------|
+
+|---------------+----------------------|
+| Format map    | Result               |
+|---------------+----------------------|
+| <2:...>       | <fn=2>...</fn>       |
+| {#dedede:...} | <fc=#dedede>...</fc> |
+| \...          | \x...                |
+|---------------+----------------------|
+
+
+**** Example:
+~'%g!x %!t(%!f)<1: >.u {#46d9ff:%G}<1: >!h'~
+could format to something like
+~<fn=6></fn> 3(1)<fn=1> </fn>°C <fc=#46d9ff><fn=6></fn></fc><fn=1> </fn>81~
+and renders in xmobar as
+
+#+ATTR_HTML: :width 400 :style margin-left: auto; margin-right: auto;
+[[./imgs/screenshot_example.png]]
+

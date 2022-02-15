@@ -10,7 +10,8 @@ from dataclasses import dataclass
 @dataclass
 class LichtProtoData:
     fetch_data: dict = None
-    _name: ClassVar = ''
+    _path: str = ''
+    state_cmd: str = ''
 
     def __getitem__(self, item):
         if item in self.fetch_data:
@@ -20,6 +21,18 @@ class LichtProtoData:
         if self.fetch_data:
             return self.fetch_data.__iter__()
         return iter([])
+
+    @property
+    def path(self):
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        self._path = path
+
+    @property
+    def put_path(self):
+        return "/".join([self.path, self.state_cmd])
 
     @property
     def index(self) -> list:
@@ -34,17 +47,25 @@ class LichtProtoData:
         return list(self.names.values())
 
     def subset(self, set_list):
-        return self.__class__({i: self[i] for i in set_list})
+        obj = self.__class__({i: self[i] for i in set_list})
+        if len(set_list) == 1:
+            if isinstance(set_list, list):
+                obj.path = "/".join([obj.path]+set_list)
+            elif isinstance(set_list, str):
+                obj.path += "/"+set_list
+        return obj
 
 
 @dataclass
 class LichtLightsData(LichtProtoData):
-    _name: ClassVar = 'lights'
+    _path: str = 'lights'
+    state_cmd: str = 'state'
 
 
 @dataclass
 class LichtGroupsData(LichtProtoData):
-    _name: ClassVar = 'groups'
+    _path: str = 'groups'
+    state_cmd: str = 'action'
 
     @property
     def lights_index(self):
@@ -58,7 +79,8 @@ class LichtGroupsData(LichtProtoData):
 
 @dataclass
 class LichtScenesData(LichtProtoData):
-    _name: ClassVar = 'scenes'
+    _path: str = 'scenes'
+    state_cmd: str = 'action'
 
     @property
     def group_index(self):
@@ -76,6 +98,17 @@ class LichtScenesData(LichtProtoData):
         scene_ids = [i for i, li in self.lights_index.items()
                      if all(lij in li for lij in lights_ids)]
         return self.subset(scene_ids)
+
+    @property
+    def path(self):
+        gi = self.group_index
+        if len(gi) == 1:
+            return f"groups/{gi[list(gi.keys())[0]]}"
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        self._path = path
 
 
 @dataclass
@@ -121,3 +154,12 @@ class LichtFetchData:
         LichtScenesData.subset = \
             self.subset_wrapper(LichtScenesData.subset,
                                 'groups', 'group_index')
+
+    def from_path(self, path):
+        obj = self
+        for p in path.split("/"):
+            if hasattr(obj, p):
+                obj = obj.__getattribute__(p)
+            if p in obj:
+                obj = obj.subset([p])
+        return obj

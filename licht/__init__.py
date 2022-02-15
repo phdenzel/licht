@@ -10,6 +10,7 @@ import licht.data
 import licht.utils
 import licht.constants
 import licht.rest
+import licht.app
 
 
 config_path = 'licht.yml'

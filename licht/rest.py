@@ -197,6 +197,21 @@ class LichtClient(ProtoRESTClient):
         sd = self.fetch_scenes()
         return licht.data.LichtFetchData(ld, gd, sd)
 
+    def change_state(self, data=None, subpath=None, update={}):
+        if data is None:
+            data = self.fetch_data()
+        if subpath is not None:
+            data = data.from_path(subpath)
+        subpath = data.put_path
+        url = self.urlpath(self.url_user, subpath)
+        states = [data[k][data.state_cmd] for k in data]
+        if update:
+            responses = []
+            for state in states:
+                response = self.put(url=url, data=update)
+                responses.append(response)
+        return responses
+
     def close(self):
         self.session.close()
 
@@ -264,12 +279,29 @@ def main():
     pprint(lfd.groups.subset(['1', '2']).lights_index)
     print("# .groups.subset('1').lights.names >")
     pprint(lfd.groups.subset('1').lights.names)
+    print("# .lights.subset('1').put_path >")
+    pprint(lfd.lights.subset('2').put_path)
+    print("# .groups.subset('1').scenes.names >")
+    pprint(lfd.groups.subset('1').scenes.names)
     print("# .scenes.subset(['3pozXmIBt5PMwpV', 'yQZz3UDndrMh18q']).lights.names")
     pprint(lfd.scenes.subset(['3pozXmIBt5PMwpV', 'yQZz3UDndrMh18q']).lights.names)
     print("# .scenes.subset(['3pozXmIBt5PMwpV', 'sNdWhjSc3UfzJMt']).groups.names")
     pprint(lfd.scenes.subset(['3pozXmIBt5PMwpV', 'sNdWhjSc3UfzJMt']).groups.names)
+    print("# .from_path('groups/1/action')")
+    pprint(lfd.from_path('groups/1/action'))
+    print("# .scenes.subset(['yQZz3UDndrMh18q']).path")
+    pprint(lfd.scenes.subset(['yQZz3UDndrMh18q']).path)
+    print("# .scenes.subset(['yQZz3UDndrMh18q']).put_path")
+    pprint(lfd.scenes.subset(['yQZz3UDndrMh18q']).put_path)
+
+    # Send data
+    # rc.change_state(data=lfd.lights.subset('4'),
+    #                 update={'on': False})
+    rc.change_state(subpath='groups/1',
+                    update={'on': True})
+
     rc.close()
 
 
 if __name__ == "__main__":
-    pass
+    main()

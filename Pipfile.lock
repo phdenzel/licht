@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b3d3e5610676e652d8f4e5ddbad9221f3d76095c3d25f0b869996d8b3cc0f455"
+            "sha256": "5cf65bf33fc0f06886feee94cda84ad338f0e3b81256644e89e654b608048869"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -25,11 +25,11 @@
         },
         "charset-normalizer": {
             "hashes": [
-                "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45",
-                "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"
+                "sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597",
+                "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"
             ],
             "markers": "python_version >= '3'",
-            "version": "==2.0.11"
+            "version": "==2.0.12"
         },
         "idna": {
             "hashes": [
@@ -42,6 +42,30 @@
         "licht": {
             "editable": true,
             "path": "."
+        },
+        "pycairo": {
+            "hashes": [
+                "sha256:0d7a6754d410d911a46f00396bee4be96500ccd3d178e7e98aef1140e3dd67ae",
+                "sha256:1ee72b035b21a475e1ed648e26541b04e5d7e753d75ca79de8c583b25785531b",
+                "sha256:261c69850d4b2ec03346c9745bad2a835bb8124e4c6961b8ceac503d744eb3b3",
+                "sha256:5525da2d8de912750dd157752aa96f1f0a42a437c5625e85b14c936b5c6305ae",
+                "sha256:6db823a18e7be1eb2a29c28961f2f01e84d3b449f06be7338d05ac8f90592cd5",
+                "sha256:736ffc618e851601e861a630293e5c910ef016b83b2d035a336f83a367bf56ab",
+                "sha256:9a32e4a3574a104aa876c35d5e71485dfd6986b18d045534c6ec510c44d5d6a7",
+                "sha256:b605151cdd23cedb31855b8666371b6e26b80f02753a52c8b8023a916b1df812",
+                "sha256:c8c2bb933974d91c5d19e54b846d964de177e7bf33433bf34ac34c85f9b30e94",
+                "sha256:e800486b51fffeb11ed867b4f2220d446e2a60a81a73b7c377123e0cbb72f49d",
+                "sha256:f123d3818e30b77b7209d70a6dcfd5b4e34885f9fa539d92dd7ff3e4e2037213"
+            ],
+            "index": "pypi",
+            "version": "==1.20.1"
+        },
+        "pygobject": {
+            "hashes": [
+                "sha256:b9803991ec0b0b4175e81fee0ad46090fa7af438fe169348a9b18ae53447afcd"
+            ],
+            "index": "pypi",
+            "version": "==3.42.0"
         },
         "pyyaml": {
             "hashes": [

@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 requests = "*"
 pyyaml = "*"
+pycairo = "*"
+pygobject = "*"
 licht = {editable = true, path = "."}
 
 [dev-packages]

@@ -1,19 +1,15 @@
 #+AUTHOR: phdenzel
-#+TITLE: xmobar_wttr
+#+TITLE: licht
 #+OPTIONS: toc:nil
 
-~xmobar_wttr~ is a command-line program which fetches weather info
-from [[https://wttr.in][wttr.in]] and applies direct formatting to be used by xmobar.
-Different from already available plugins, it can easily be configured
-to use any kind of combination of numbers, icons, and colors.  It
-implements a custom syntax with which a single line in the
-~xmobar_wttr.yml~ configuration file translates to an xmobar field entry.
+~licht~ is a command-line program (including a GTK applet) which
+fetches info from a local Philips Hue bridge in your network and
+enables you to apply basic operations, such turning lights on/off,
+dimming, color-temperature changing, etc.
 
-In the ~commands~ list of your ~xmobarrc~, add something along the lines
-of
-#+begin_src haskell
-Run Com "xmobar_wttr" ["-c", "~/.config/xmobar/xmobar_wttr.yml"] "wttr" 9000
-#+end_src
+I was looking for a lightweight program for Philips Hue, but
+unfortunately most don't run (stable) on Arch linux, so I decided to
+write it myself.
 
 
 *** Prerequisites
@@ -21,27 +17,29 @@ Run Com "xmobar_wttr" ["-c", "~/.config/xmobar/xmobar_wttr.yml"] "wttr" 9000
     This program mainly uses following python3 modules
     - requests
     - pyyaml
+    - pycairo
+    - PyGObject
 
-    Furthermore, the program uses weather icons from
-    [[https://github.com/erikflowers/weather-icons][https://github.com/erikflowers/weather-icons]].  Install them
-    directly from the website, using an AUR helper such as
-    
+    The PyGObject dependencies additionally require some packages to
+    be installed on your distribution. For a detailed overview see
+    [[https://pygobject.readthedocs.io/en/latest/getting_started.html][https://pygobject.readthedocs.io/en/latest/getting_started.html]].
+
+    For Arch linux use:
+
     #+begin_src shell
-      yay -S ttf-weather-icons
+      sudo pacman -S python cairo pkgconf gobject-introspection gtk3
     #+end_src
-    
-    or by other means.
 
 
 *** Install
 
 #+BEGIN_SRC shell
-pip install xmobar-wttr
+pip install licht
 #+END_SRC
 
 For installing from source, clone the repository, and run
 #+BEGIN_SRC shell
-cd xmobar_wttr
+cd licht
 python setup.py install --user
 #+END_SRC
 
@@ -62,7 +60,7 @@ or start every command with ~pipenv run~.
 *** Usage
 
 #+BEGIN_SRC shell
-  usage: xmobar_wttr [-h] [-c <path>] [-l <loc>] [-f <format>] [-o <path>] [-s <section>] [-p <par-list> [<par-list> ...]] [-v]
+  usage: licht [-h] [-c <path>] [-l <loc>] [-f <format>] [-o <path>] [-s <section>] [-p <par-list> [<par-list> ...]] [-v]
 
   optional arguments:
     -h, --help            show this help message and exit

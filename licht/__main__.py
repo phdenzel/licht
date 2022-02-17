@@ -10,7 +10,6 @@ from licht.app import LichtApplet
 
 
 def main(verbose=False):
-    print(licht.args)
     bridge_ip = licht.bridge_ip
     licht_client = LichtClient(bridge_ip)
     if licht.args.app_mode:
@@ -33,16 +32,23 @@ def main(verbose=False):
             print(f"{idx:>17} :  {name}")
     else:
         try:
+            update = {}
             if licht.args.light:
-                subpath = 'lights/{licht.args.light}'
-                update = json.loads(licht.args.update)
+                subpath = f'lights/{licht.args.light}'
             elif licht.args.group:
-                subpath = 'lights/{licht.args.group}'
-                update = json.loads(licht.args.update)
+                subpath = f'groups/{licht.args.group}'
             elif licht.args.scene:
                 data = licht_client.fetch_data().scenes.subset([licht.args.scene])
                 subpath = data.put_path
-                update = {"scene": licht.args.scene}
+                update["scene"] = licht.args.scene
+            if licht.args.on is not None:
+                update["on"] = licht.args.on
+            if licht.args.bri is not None:
+                update["bri"] = licht.args.bri
+            if licht.args.ct is not None:
+                update["ct"] = licht.args.ct
+            if licht.args.update:
+                update = json.loads(licht.args.update)
             licht_client.change_state(subpath=subpath, update=update)
         except Exception:
             licht.parser.print_help()

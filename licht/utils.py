@@ -5,6 +5,16 @@ licht.utils
 """
 
 
+def str2bool_explicit(v):
+    bstr = v.lower()
+    if bstr in ('true', 't', 'yes', 'y', '1'):
+        return True
+    elif bstr in ('false', 'f', 'no', 'n', '0'):
+        return False
+    else:
+        return None
+
+
 def linear_transformation(x, lower, upper, a=0, b=1,
                           allow_out_of_bounds=True,
                           as_int=False):

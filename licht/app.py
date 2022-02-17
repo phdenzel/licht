@@ -4,6 +4,8 @@ licht.app
 @author: phdenzel
 """
 import os
+import logging
+import signal
 import licht
 from licht.rest import LichtClient
 import gi
@@ -266,7 +268,7 @@ class LichtApplet(Gtk.Application):
         toggle_state = widget.get_active()
         if data_state != toggle_state:
             update = {state_attr: toggle_state}
-            print(f"PUT:\tpath: {data.put_path}\tbody: {update}")
+            logging.info(f"PUT:  path: {data.put_path}\tbody: {update}")
             self.client.change_state(data=data, update=update)
 
     def on_activation_change(self, widget):
@@ -281,7 +283,7 @@ class LichtApplet(Gtk.Application):
         idx = get_subpath.split('/')[-1]
         data = self.data_cache.from_path(get_subpath)
         update = {state_attr: idx}
-        print(f"PUT:\tpath: {data.put_path}\tbody: {update}")
+        logging.info(f"PUT:  path: {data.put_path}\tbody: {update}")
         self.client.change_state(subpath=data.put_path, update=update)
 
     def on_scroll_change(self, widget):
@@ -300,7 +302,7 @@ class LichtApplet(Gtk.Application):
             widget.get_value())
         if data[idx][data.state_cmd]['on'] and (data_state != scroll_state):
             update = {state_attr: scroll_state}
-            print(f"PUT:\tpath: {data.put_path}\tbody: {update}")
+            logging.info(f"PUT:  path: {data.put_path}\tbody: {update}")
             self.client.change_state(data=data, update=update)
 
     def on_scroll_click(self, widget, event):
@@ -352,6 +354,7 @@ class LichtApplet(Gtk.Application):
         """
         Run Gtk main
         """
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
         Gtk.main()
 
 

@@ -34,6 +34,8 @@ def read_args():
     p = ArgumentParser(prog='licht', formatter_class=RawTextHelpFormatter)
 
     # LichtApplet
+    p.add_argument("-d", "--daemon", dest="as_daemon", action="store_true",
+                   help="Run the Licht applet as a daemon process")
     p.add_argument("-a", "--app", "--applet", dest="app_mode", action="store_true",
                    help="Run the Licht applet")
 
@@ -61,7 +63,16 @@ def read_args():
     p.add_argument("-p", "--subpath", dest="subpath",
                    metavar="<subpath>", type=str,
                    help="Subpath for state change")
-    # TODO: input json string and convert to dict
+    p.add_argument("-o", "--on", dest="on", type=licht.utils.str2bool_explicit,
+                   default=None,
+                   choices=['true', 'false', 1, 0, 'yes', 'no', 'y', 'n'],
+                   help="Toggle lights on")
+    p.add_argument("-b", "--bri", dest="bri", metavar="<bri-value>",
+                   type=int,
+                   help="Update for the brightness value [0-255]")
+    p.add_argument("-t", "--ct", dest="ct", metavar="<color-temp-value>",
+                   type=int,
+                   help="Update for the color temperature value [0-65535]")
     p.add_argument("-u", "--update", metavar="<json-string>", type=str,
                    help="Update body for the PUT request")
 
@@ -72,6 +83,10 @@ def read_args():
     p.add_argument("--section", dest="config_section", metavar="<section>",
                    type=str, default="Defaults",
                    help="Section in the yaml file to be parsed")
+    p.add_argument("--dark-icon", dest="dark_icon", action="store_true",
+                   help="Use a dark icon on systray (for light themes)")
+    p.add_argument("--output", dest="output_file", metavar="<path>", type=str,
+                   help="Set the path of the output log-file")
     p.add_argument("-v", "--verbose", dest="verbose", action="store_true",
                    help="Run program in verbose mode")
     args = p.parse_args()

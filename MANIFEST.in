@@ -1,0 +1,4 @@
+# Including text sources
+include assets/*
+include LICENSE
+include README.md

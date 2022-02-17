@@ -1,7 +1,7 @@
 MODULE := licht
 
 pkg: readme
-	@python3 setup.py sdist bdist_egg
+	@python3 setup.py sdist build
 
 twinetest: pkg
 	@twine upload -r testpypi dist/*

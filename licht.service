@@ -1,0 +1,12 @@
+[Unit]
+Description=Licht applet service
+
+[Service]
+ExecStart=licht -a
+Restart=on-failure
+Environment=PYTHONUNBUFFERED=1
+Type=notify
+User=phdenzel
+
+[Install]
+WantedBy=default.target

@@ -23,7 +23,7 @@ setup(
     name="licht",
     author="Philipp Denzel",
     author_email="phdenzel@gmail.com",
-    version="0.1.dev0",
+    version="0.1.dev1",
     description=("A simple controller applet for Hue lights!"),
     long_description=ld['data'],
     long_description_content_type=ld['content_type'],
@@ -57,7 +57,7 @@ setup(
         ],
     },
     data_files=[
-        ('assets', ['assets/icon.svg', 'assets/icon_dark.svg'])
+        ('assets', ['assets/licht_icon.svg', 'assets/licht_icon_dark.svg'])
     ],
     # setup_requires=['pytest-runner'],
     # tests_require=['pytest'],

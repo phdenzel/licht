@@ -59,75 +59,57 @@ or start every command with ~pipenv run~.
 
 *** Usage
 
-#+BEGIN_SRC shell
-  usage: licht [-h] [-c <path>] [-l <loc>] [-f <format>] [-o <path>] [-s <section>] [-p <par-list> [<par-list> ...]] [-v]
+To start a daemon, run ~licht --daemon~.
+    
 
-  optional arguments:
+#+BEGIN_SRC shell
+  usage: licht [-h] [-d] [-a] [--lights] [--groups] [--scenes] [-l <light-id>] [-g <group-id>] [-s <scene-id>]
+               [-p <subpath>] [-o {true,false,1,0,yes,no,y,n}] [-b <bri-value>] [-t <color-temp-value>] [-u <json-string>]
+               [-c <path>] [--section <section>] [--dark-icon] [-v]
+
+  options:
     -h, --help            show this help message and exit
+    -d, --daemon          Run the Licht applet as a daemon process
+    -a, --app, --applet   Run the Licht applet
+    --lights, --list-lights
+                          List the index of lights in the network
+    --groups, --list-groups
+                          List the index of groups in the network
+    --scenes, --list-scenes
+                          List the index of groups in the network
+    -l <light-id>, --light <light-id>, --light-id <light-id>
+                          Light-id for state change
+    -g <group-id>, --group <group-id>, --group-id <group-id>
+                          Group-id for state change
+    -s <scene-id>, --scene <scene-id>, --scene-id <scene-id>
+                          Scene-id for state change
+    -p <subpath>, --subpath <subpath>
+                          Subpath for state change
+    -o {true,false,1,0,yes,no,y,n}, --on {true,false,1,0,yes,no,y,n}
+                          Toggle lights on
+    -b <bri-value>, --bri <bri-value>
+                          Update for the brightness value [0-255]
+    -t <color-temp-value>, --ct <color-temp-value>
+                          Update for the color temperature value [0-65535]
+    -u <json-string>, --update <json-string>
+                          Update body for the PUT request
     -c <path>, --config <path>
                           Path to the config file
-    -l <loc>, --location <loc>
-                          Location for which to pull information.
-    -f <format>, --format <format>
-                          Format template for xmobarrc
-    -o <path>, --output <path>
-                          Path to the output file
-    -s <section>, --section <section>
-                          Section in the yaml file to be parsed
-    -p <par-list> [<par-list> ...], --pars <par-list> [<par-list> ...]
-                          Select parameters to be fetched from wttr.in
-                          excluded parameters are not available in xmobar template format
+    --section <section>   Section in the yaml file to be parsed
+    --dark-icon           Use a dark icon on systray (for light themes)
+    --output <path>       Set the path of the output log-file
     -v, --verbose         Run program in verbose mode
 #+END_SRC
 
 
 *** Configuration
 
-~xmobar_wttr~ works with both command-line arguments as well as YAML
+~licht~ works with both command-line arguments as well as YAML
 configuration files (the first takes precedence over the latter).  To
-set your desired defaults edit the configuration file
-~xmobar_wttr.yml~ and place it in either 
-- ~~/.config/xmobar_wttr/xmobar_wttr.yml~
-- ~~/.config/xmobar/xmobar_wttr.yml~
-- ~~/.xmobar_wttr/xmobar_wttr.yml~
-- ~~/.xmobar_wttr.yml~
-
-
-*** Notation
-
-- Fields are separated by ~%~.
-- Each field should have a parameter entry prefixed by an exclamation
-  mark ~!~, e.g. ~!h~.
-- Units can be placed using ~.u~
-- Fonts can be selected using ~<N:...>~ where ~N~ is the xmobar font
-  index, e.g. ~<2:weather condition>~ formats to ~<fn=2>weather
-  condition</fn>~
-- Analogously colors can be used using ~{#dedede:...}~.
-
-|----------+------------------------------------|
-| Notation | *Description                       |
-|----------+------------------------------------|
-| %[!par]  | parameter value                    |
-| %g[!par] | render parameter only as icon      |
-| %G[!par] | prefix icon to parameter value     |
-| .u       | append units of previous parameter |
-|----------+------------------------------------|
-
-|---------------+----------------------|
-| Format map    | Result               |
-|---------------+----------------------|
-| <2:...>       | <fn=2>...</fn>       |
-| {#dedede:...} | <fc=#dedede>...</fc> |
-| \...          | \x...                |
-|---------------+----------------------|
-
-
-**** Example:
-~'%g!x %!t(%!f)<1: >.u {#46d9ff:%G}<1: >!h'~
-could format to something like
-~<fn=6></fn> 3(1)<fn=1> </fn>°C <fc=#46d9ff><fn=6></fn></fc><fn=1> </fn>81~
-and renders in xmobar as
-
-#+ATTR_HTML: :width 400 :style margin-left: auto; margin-right: auto;
-[[./imgs/screenshot_example.png]]
+set your desired defaults, edit the configuration file
+~licht_example.yml~ and place it in either
+- ~~/.config/licht/licht.yml~
+- ~~/.config/.licht.yml~
+- ~~/.licht/licht.yml~
+- ~~/.licht.yml~
 

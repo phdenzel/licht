@@ -12,6 +12,8 @@ from licht.app import LichtApplet
 def main(verbose=False):
     bridge_ip = licht.bridge_ip
     licht_client = LichtClient(bridge_ip)
+    if licht.args.register:
+        licht_client.register_user(verbose=True)
     if licht.args.app_mode:
         licht_applet = LichtApplet(client=licht_client)
         licht_applet.run()

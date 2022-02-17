@@ -24,6 +24,7 @@ class LichtIndicator(object):
         else:
             self.icon_path = licht.icon_path
         self.icon_path = os.path.expanduser(self.icon_path)
+        logging.info(f'Loading icon {self.icon_path}')
         self.indicator = AppIndicator3.Indicator.new(
             self.app_name, self.icon_path,
             AppIndicator3.IndicatorCategory.OTHER)

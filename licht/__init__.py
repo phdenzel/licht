@@ -27,11 +27,13 @@ licht.parsing.read_configs()
 licht.parsing.load_configs(args.config_section)
 licht.parsing.load_args()
 if licht.args.dark_icon:
-    licht.icon_path = 'assets/icon_dark.svg'
+    licht.icon_path = licht.icon_path.replace('.svg', '_dark.svg')
 
 logging.basicConfig(
-    level=logging.INFO, filename=licht.output_file,
+    level=logging.DEBUG, filename=licht.output_file,
     filemode="a+", style="{", format="{asctime:<15} {levelname:<8} {message}")
+logging.info(f'Using log-file {licht.output_file}')
+logging.info(f'Loading configurations from {licht.config_path}:{licht.config_section}')
 
 
 def env():

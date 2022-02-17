@@ -77,6 +77,8 @@ def read_args():
                    help="Update body for the PUT request")
 
     # Configuration settings
+    p.add_argument("--register", dest="register", action="store_true",
+                   help="Authenticate licht and receive a username from bridge")
     p.add_argument("-c", "--config", dest="config_path", metavar="<path>",
                    type=str, default=default_config_file(),
                    help="Path to the config file")

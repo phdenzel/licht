@@ -5,6 +5,7 @@ licht.rest
 """
 import os
 import requests
+import logging
 from pprint import pprint
 from urllib.parse import urljoin
 import licht
@@ -146,7 +147,7 @@ class LichtClient(ProtoRESTClient):
             raise LichtClientResponseError(err_descr)
         elif sum(errors) > 0:
             err_descr = content[errors.index(True)]['error']['description']
-            print(f'Warning: {err_descr}')
+            logging.error(f'Warning: {err_descr}')
         registration = None
         username = None
         for index in [i for i, err in enumerate(errors) if not err]:
@@ -159,8 +160,8 @@ class LichtClient(ProtoRESTClient):
             licht.configs[licht.config_section].update(registration)
             licht.parsing.write_configs()
         if verbose:
-            print(f'Authentification response: {content}')
-            print(f'Username: {username}')
+            logging.info(f'Authentification response: {content}')
+            logging.info(f'Username: {username}')
         return content
 
     def unregister_user(self, verbose=False) -> dict:

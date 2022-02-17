@@ -1,0 +1,5 @@
+Defaults:
+  bridge_ip: 192.168.178.28
+  username: xuEM4R4njke5L-TZszST85dytwXNNAfreuVB9eMP
+  icon_path: assets/icon.svg
+  output_file: /tmp/licht.log

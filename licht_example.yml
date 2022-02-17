@@ -1,5 +1,10 @@
 Defaults:
-  bridge_ip: 192.168.178.28
-  username: xuEM4R4njke5L-TZszST85dytwXNNAfreuVB9eMP
-  icon_path: assets/icon.svg
+  # search your bridge's network IP and add it here
+  bridge_ip: 192.168.178.28  # this is just an example, needs replacing
+  # download the icon and place it into e.g. ~/.config/licht/icon.svg
+  icon_path: ~/.config/licht/icon.svg
+  # there is no need to change output_file, unless /tmp doesn't exist
   output_file: /tmp/licht.log
+  # use `licht --register` once after you placed
+  # this .yml file into it's permanent location
+  username: xuEM4R4njke5L-TZszST85dytwXNNAfreuVB9eMP  # this is just an example, needs replacing

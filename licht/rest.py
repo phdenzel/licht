@@ -5,9 +5,9 @@ licht.rest
 """
 import os
 import requests
+from pprint import pprint
 from urllib.parse import urljoin
 import licht
-from pprint import pprint
 
 
 class LichtClientResponseError(requests.exceptions.RequestException):
@@ -221,86 +221,7 @@ class LichtClient(ProtoRESTClient):
 
 def main():
     rc = LichtClient(licht.bridge_ip)
-
-    # Get description
-    # r = rc.get(url=rc.url_base, subpath='description.xml', verbose=True)
-
-    # Register user
-    # r = rc.register_user(verbose=True)
-    # print(r)
-
-    # Unregister user
-    # rc.unregister_user(verbose=True)
-
-    # Get config
-    # rc.get(rc.url_user, subpath='config', verbose=True)
-
-    # print("### Lights")
-    # lights = rc.fetch_lights()
-    # # pprint(lights)
-    # print("# .names >")
-    # pprint(lights.names)
-    # print("# .subset(['2']) >")
-    # pprint(lights.subset(['2']).names)
-
-    # print("### Groups")
-    # groups = rc.fetch_groups()
-    # # pprint(groups)
-    # print("# .names >")
-    # pprint(groups.names)
-    # print("# .lights_index >")
-    # pprint(groups.lights_index)
-    # print("# .with_lights('7').names >")
-    # pprint(groups.with_lights('7').names)
-    # print("# .subset(['1']).names >")
-    # pprint(groups.subset(['1']).names)
-
-    # print("### Scenes")
-    # scenes = rc.fetch_scenes()
-    # # pprint(scenes)
-    # print("# .names >")
-    # pprint(scenes.names)
-    # print("# .group_index >")
-    # pprint(scenes.group_index)
-    # print("# .in_groups('1', '3').names >")
-    # pprint(scenes.in_groups('1', '3').names)
-    # print("# .lights_index >")
-    # pprint(scenes.lights_index)
-    # print("# .with_lights('2', '7').names >")
-    # pprint(scenes.with_lights('2', '7').names)
-
-    print("### Fetch data")
-    lfd = rc.fetch_data()
-    print("# .lights.names >")
-    pprint(lfd.lights.names)
-    print("# .groups.lights_index >")
-    pprint(lfd.groups.lights_index)
-    print("# .groups.subset(['1', '2']).lights_index >")
-    pprint(lfd.groups.subset(['1', '2']).lights_index)
-    print("# .groups.subset('1').lights.names >")
-    pprint(lfd.groups.subset('1').lights.names)
-    print("# .lights.subset('1').put_path >")
-    pprint(lfd.lights.subset('2').put_path)
-    print("# .groups.subset('1').scenes.names >")
-    pprint(lfd.groups.subset('1').scenes.names)
-    print("# .scenes.subset(['3pozXmIBt5PMwpV', 'yQZz3UDndrMh18q']).lights.names")
-    pprint(lfd.scenes.subset(['3pozXmIBt5PMwpV', 'yQZz3UDndrMh18q']).lights.names)
-    print("# .scenes.subset(['3pozXmIBt5PMwpV', 'sNdWhjSc3UfzJMt']).groups.names")
-    pprint(lfd.scenes.subset(['3pozXmIBt5PMwpV', 'sNdWhjSc3UfzJMt']).groups.names)
-    print("# .from_path('groups/1/action')")
-    pprint(lfd.from_path('groups/1/action'))
-    print("# .scenes.subset(['yQZz3UDndrMh18q']).path")
-    pprint(lfd.scenes.subset(['yQZz3UDndrMh18q']).path)
-    print("# .scenes.subset(['yQZz3UDndrMh18q']).put_path")
-    pprint(lfd.scenes.subset(['yQZz3UDndrMh18q']).put_path)
-
-    # Send data
-    # rc.change_state(data=lfd.lights.subset('4'),
-    #                 update={'on': False})
-    rc.change_state(subpath='groups/1',
-                    update={'on': True})
-
-    rc.close()
+    rc.get(rc.url_user, verbose=True)
 
 
 if __name__ == "__main__":

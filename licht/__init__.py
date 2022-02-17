@@ -17,7 +17,6 @@ config_path = 'licht.yml'
 config_section = 'Defaults'
 bridge_ip = None
 username = None
-output_file = '/tmp/licht'
 
 
 parser, args = licht.parsing.read_args()

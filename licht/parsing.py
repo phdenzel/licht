@@ -10,6 +10,9 @@ import licht
 
 
 def default_config_file(basename='licht.yml'):
+    """
+    Get the path of the configuration with the highest priority
+    """
     paths = licht.constants.default_config_paths
     for p in paths:
         p = os.path.expanduser(p)
@@ -30,13 +33,43 @@ def read_args():
     """
     p = ArgumentParser(prog='licht', formatter_class=RawTextHelpFormatter)
 
+    # LichtApplet
+    p.add_argument("-a", "--app", "--applet", dest="app_mode", action="store_true",
+                   help="Run the Licht applet")
+
+    # LichtClient.fetch_data
+    p.add_argument("--lights", "--list-lights", dest="list_lights",
+                   action="store_true",
+                   help="List the index of lights in the network")
+    p.add_argument("--groups", "--list-groups", dest="list_groups",
+                   action="store_true",
+                   help="List the index of groups in the network")
+    p.add_argument("--scenes", "--list-scenes", dest="list_scenes",
+                   action="store_true",
+                   help="List the index of groups in the network")
+
+    # LichtClient.state_change
+    p.add_argument("-l", "--light", "--light-id", dest="light",
+                   metavar="<light-id>", type=str,
+                   help="Light-id for state change")
+    p.add_argument("-g", "--group", "--group-id", dest="group",
+                   metavar="<group-id>", type=str,
+                   help="Group-id for state change")
+    p.add_argument("-s", "--scene", "--scene-id", dest="scene",
+                   metavar="<scene-id>", type=str,
+                   help="Scene-id for state change")
+    p.add_argument("-p", "--subpath", dest="subpath",
+                   metavar="<subpath>", type=str,
+                   help="Subpath for state change")
+    # TODO: input json string and convert to dict
+    p.add_argument("-u", "--update", metavar="<json-string>", type=str,
+                   help="Update body for the PUT request")
+
+    # Configuration settings
     p.add_argument("-c", "--config", dest="config_path", metavar="<path>",
                    type=str, default=default_config_file(),
                    help="Path to the config file")
-    p.add_argument("-o", "--output", dest="output_file", metavar="<path>",
-                   type=str, default="/tmp/licht",
-                   help="Path to the output file")
-    p.add_argument("-s", "--section", dest="config_section", metavar="<section>",
+    p.add_argument("--section", dest="config_section", metavar="<section>",
                    type=str, default="Defaults",
                    help="Section in the yaml file to be parsed")
     p.add_argument("-v", "--verbose", dest="verbose", action="store_true",

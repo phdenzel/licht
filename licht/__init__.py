@@ -16,7 +16,7 @@ import licht.app
 
 config_path = 'licht.yml'
 config_section = 'Defaults'
-icon_path = 'assets/icon.svg'
+icon_path = 'assets/licht_icon.svg'
 output_file = '/tmp/licht.log'
 bridge_ip = None
 username = None
@@ -26,8 +26,10 @@ parser, args = licht.parsing.read_args()
 licht.parsing.read_configs()
 licht.parsing.load_configs(args.config_section)
 licht.parsing.load_args()
+
 if licht.args.dark_icon:
     licht.icon_path = licht.icon_path.replace('.svg', '_dark.svg')
+licht.icon_path = licht.parsing.find_icon_path(licht.icon_path)
 
 logging.basicConfig(
     level=logging.DEBUG, filename=licht.output_file,

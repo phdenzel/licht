@@ -4,6 +4,8 @@ licht.parsing
 @author: phdenzel
 """
 import os
+import sys
+import site
 from argparse import ArgumentParser, RawTextHelpFormatter
 import yaml
 import licht
@@ -22,6 +24,18 @@ def default_config_file(basename='licht.yml'):
             bn = '.' + basename
             p = os.path.dirname(p)
             filename = os.path.join(p, bn)
+        if os.path.exists(filename):
+            return filename
+    return basename
+
+
+def find_icon_path(basename='assets/licht_icon.svg'):
+    basename = os.path.expanduser(basename)
+    if os.path.exists(basename):
+        return basename
+    for directories in (sys.prefix, site.USER_BASE,
+                        '~/.config/licht', '~/.licht'):
+        filename = os.path.join(os.path.expanduser(directories), basename)
         if os.path.exists(filename):
             return filename
     return basename

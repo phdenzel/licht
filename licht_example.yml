@@ -2,7 +2,7 @@ Defaults:
   # search your bridge's network IP and add it here
   bridge_ip: 192.168.178.28  # this is just an example, needs replacing
   # download the icon and place it into e.g. ~/.config/licht/icon.svg
-  icon_path: ~/.config/licht/icon.svg
+  icon_path: assets/licht_icon.svg
   # there is no need to change output_file, unless /tmp doesn't exist
   output_file: /tmp/licht.log
   # use `licht --register` once after you placed

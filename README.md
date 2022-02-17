@@ -53,7 +53,7 @@ To start a daemon, run `licht --daemon`.
 
     usage: licht [-h] [-d] [-a] [--lights] [--groups] [--scenes] [-l <light-id>] [-g <group-id>] [-s <scene-id>]
     	     [-p <subpath>] [-o {true,false,1,0,yes,no,y,n}] [-b <bri-value>] [-t <color-temp-value>] [-u <json-string>]
-    	     [-c <path>] [--section <section>] [--dark-icon] [-v]
+    	     [--register] [-c <path>] [--section <section>] [--dark-icon] [--output <path>] [-v]
     
     options:
       -h, --help            show this help message and exit
@@ -81,6 +81,7 @@ To start a daemon, run `licht --daemon`.
     			Update for the color temperature value [0-65535]
       -u <json-string>, --update <json-string>
     			Update body for the PUT request
+      --register            Authenticate licht and receive a username from bridge
       -c <path>, --config <path>
     			Path to the config file
       --section <section>   Section in the yaml file to be parsed

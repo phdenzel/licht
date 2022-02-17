@@ -14,7 +14,7 @@ def main(verbose=False):
     licht_client = LichtClient(bridge_ip)
     if licht.args.register:
         licht_client.register_user(verbose=True)
-    if licht.args.app_mode:
+    if licht.args.app_mode or licht.args.as_daemon:
         licht_applet = LichtApplet(client=licht_client)
         licht_applet.run()
     elif licht.args.list_lights:

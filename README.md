@@ -1,6 +1,6 @@
 `licht` is a command-line program (including a GTK applet) which
 fetches info from a local Philips Hue bridge in your network and
-enables you to apply basic operations, such turning lights on/off,
+enables you to apply basic operations, such as turning lights on/off,
 dimming, color-temperature changing, etc.
 
 I was looking for a lightweight program for Philips Hue, but
@@ -19,7 +19,7 @@ This program mainly uses following python3 modules
 
 The PyGObject dependencies additionally require some packages to
 be installed on your distribution. For a detailed overview see
-[https://pygobject.readthedocs.io/en/latest/getting<sub>started.html</sub>](https://pygobject.readthedocs.io/en/latest/getting_started.html).
+[pygobject.readthedocs.io/en/latest/getting_started.html](https://pygobject.readthedocs.io/en/latest/getting_started.html).
 
 For Arch linux use:
 

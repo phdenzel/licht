@@ -1,0 +1,44 @@
+[project]
+name = "licht"
+version = "0.0.1"
+license = { file = "LICENSE" }
+authors = [{ name = "Philipp Denzel", email = "phdenzel@gmail.com" }]
+description = "licht is a command-line program (including a GTK applet) which fetches info from a local Philips Hue bridge in your network and enables you to apply basic operations, such as turning lights on/off, dimming, color-temperature changing, etc."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "requests",
+  "pyyaml",
+  "pycairo",
+  "pygobject",
+  ]
+[project.optional-dependencies]
+dev = ["ruff==0.4.1", "pre-commit==3.7.0", "pytest==8.1.1"]
+
+[project.urls]
+Homepage = "https://github.com/phdenzel/licht"
+Issues = "https://github.com/phdenzel/licht/issues"
+
+[project.scripts]
+licht = "licht.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+
+[tool.ruff.lint]
+extend-select = [
+    "UP", # pyupgrade
+    "D",  # pydocstyle
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
